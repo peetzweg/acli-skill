@@ -237,6 +237,8 @@ acli jira workitem transition --filter 10001 --status "To Do" --yes
 
 ## workitem delete
 
+> **DESTRUCTIVE: This permanently deletes work items. Always confirm with the user before executing. For bulk operations via `--jql` or `--filter`, first run a search to show what will be affected.**
+
 Delete work items.
 
 ```
@@ -543,6 +545,8 @@ acli jira workitem attachment list [flags]
 ---
 
 ## workitem attachment delete
+
+> **DESTRUCTIVE: This permanently deletes an attachment. Confirm with the user before executing.**
 
 Delete an attachment.
 

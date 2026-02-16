@@ -1,6 +1,15 @@
 ---
 name: acli
-description: "Reference guide for the Atlassian CLI (acli) - a command-line tool for interacting with Atlassian Cloud products. Use this skill when the user wants to perform Jira operations (create/edit/search/transition work items, manage projects, boards, sprints, filters, dashboards), administer Atlassian organizations (manage users, authentication), or automate Atlassian workflows from the terminal. Covers all acli commands including: jira workitem (create, edit, search, assign, transition, comment, clone, link, archive), jira project (create, list, update, archive), jira board/sprint, jira filter/dashboard, admin user management, and rovodev (Rovo Dev AI agent). Requires an authenticated acli binary already installed on the system."
+description: "Reference guide for the Atlassian CLI (acli) - a command-line tool for interacting with Jira Cloud and Atlassian organization administration. Use this skill when the user wants to perform Jira operations (create/edit/search/transition work items, manage projects, boards, sprints, filters, dashboards), administer Atlassian organizations (manage users, authentication), or automate Atlassian workflows from the terminal. Covers all acli commands including: jira workitem (create, edit, search, assign, transition, comment, clone, link, archive), jira project (create, list, update, archive), jira board/sprint, jira filter/dashboard, admin user management, and rovodev (Rovo Dev AI agent). Requires an authenticated acli binary already installed on the system."
+required_tools:
+  - acli
+env_vars:
+  - name: API_TOKEN
+    description: "Atlassian API token for non-interactive Jira authentication (optional — only needed for CI/automation, not for interactive OAuth login)"
+    required: false
+  - name: API_KEY
+    description: "Atlassian Admin API key for organization administration commands (optional — only needed for admin commands)"
+    required: false
 ---
 
 # Atlassian CLI (acli) Reference
@@ -46,6 +55,34 @@ Switch between accounts:
 acli jira auth switch --site mysite.atlassian.net --email user@atlassian.com
 acli admin auth switch --org myorgname
 ```
+
+## Security
+
+### Secret Handling
+- **Never hardcode tokens or API keys in commands.** Always use environment variables (`$API_TOKEN`, `$API_KEY`) or file-based input (`< token.txt`).
+- **Never log, echo, or display tokens** in output. Avoid piping secrets through intermediate files that persist on disk.
+- **Prefer OAuth (`--web`) for interactive use.** Only use token-based auth for CI/automation where OAuth is not feasible.
+- **Do not store tokens in shell history.** If using `echo "$API_TOKEN" | acli ...`, ensure the variable is set in the environment rather than inlined as a literal value.
+
+### Destructive Operations
+The following commands are **destructive or irreversible** — always confirm with the user before executing:
+- `acli jira workitem delete` — permanently deletes work items
+- `acli jira project delete` — permanently deletes a project and all its work items
+- `acli admin user delete` — deletes managed user accounts
+- `acli admin user deactivate` — deactivates user accounts
+- `acli jira field delete` — moves custom fields to trash
+
+These commands are **impactful but reversible**:
+- `acli jira workitem archive` / `unarchive`
+- `acli jira project archive` / `restore`
+- `acli admin user cancel-delete` — cancels pending deletion
+- `acli jira field cancel-delete` — restores field from trash
+
+**Agent safety rules:**
+1. Never run destructive commands without explicit user confirmation, even if `--yes` is available.
+2. When bulk-targeting via `--jql` or `--filter`, first run a search with the same query to show the user what will be affected.
+3. Prefer `--json` output to verify targets before applying destructive changes.
+4. Do not combine `--yes` with destructive bulk operations unless the user explicitly requests unattended execution.
 
 ## Command Structure
 

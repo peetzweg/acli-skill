@@ -111,6 +111,8 @@ acli jira project update --project-key "TEAM1" --from-json "project.json"
 
 ### jira project delete
 
+> **DESTRUCTIVE: This permanently deletes a project and all its work items. Always confirm with the user before executing.**
+
 Delete a project.
 
 ```
@@ -365,6 +367,8 @@ acli jira field create --name "Priority Level" --type "com.atlassian.jira.plugin
 
 ### jira field delete
 
+> **CAUTION: This moves a custom field to trash. Use `jira field cancel-delete` to restore if needed. Confirm with the user before executing.**
+
 Move a custom field to trash.
 
 ```
@@ -407,8 +411,10 @@ acli admin auth login [flags]
 Examples:
 ```bash
 acli admin auth login --email admin@atlassian.com --token < token.txt
-echo "$KEY" | acli admin auth login --email admin@atlassian.com --token
+echo "$API_KEY" | acli admin auth login --email admin@atlassian.com --token
 ```
+
+> **Note:** Never hardcode API keys in commands. Always use environment variables or file-based input. Prefer `< token.txt` over `echo` to avoid shell history exposure.
 
 ### admin auth logout
 
@@ -469,6 +475,8 @@ acli admin user activate --from-file users.txt
 
 ### admin user deactivate
 
+> **CAUTION: This deactivates user accounts, revoking their access. Use `admin user activate` to reverse. Confirm with the user before executing.**
+
 Deactivate users.
 
 ```
@@ -476,6 +484,8 @@ acli admin user deactivate [flags]
 ```
 
 ### admin user delete
+
+> **DESTRUCTIVE: This deletes managed user accounts. Use `admin user cancel-delete` to cancel pending deletions. Always confirm with the user before executing.**
 
 Delete managed accounts.
 

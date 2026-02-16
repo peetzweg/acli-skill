@@ -1,6 +1,6 @@
 # Atlassian CLI (acli) Skill
 
-An agent skill that provides a complete reference for the [Atlassian CLI (acli)](https://developer.atlassian.com/cloud/acli/guides/introduction/) — enabling AI agents to help you manage Jira work items, projects, boards, sprints, filters, and more from the command line.
+An agent skill that provides a complete reference for the [Atlassian CLI (acli)](https://developer.atlassian.com/cloud/acli/guides/introduction/) — enabling AI agents to help you manage Jira Cloud work items, projects, boards, sprints, filters, Atlassian organization administration, and more from the command line.
 
 Available on [ClawHub](https://clawhub.ai/peetzweg/atlassian-cli).
 
@@ -42,6 +42,12 @@ Once installed, just ask your agent to perform Jira operations naturally:
 - *"Bulk assign these issues to user@company.com"*
 
 The agent will use the skill's reference to construct the right `acli` commands.
+
+## Security Notes
+
+- The skill references environment variables `$API_TOKEN` and `$API_KEY` for non-interactive authentication. These are **optional** — interactive OAuth (`--web`) is recommended for normal use.
+- Destructive commands (`delete`, `deactivate`, `archive`) include warnings in the reference docs. The agent is instructed to always confirm with you before running them.
+- Never paste API tokens directly into chat. Use environment variables or file-based input.
 
 ## Reference
 
