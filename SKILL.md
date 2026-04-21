@@ -1,15 +1,10 @@
 ---
 name: acli
 description: "Reference guide for the Atlassian CLI (acli) - a command-line tool for interacting with Jira Cloud and Atlassian organization administration. Use this skill when the user wants to perform Jira operations (create/edit/search/transition work items, manage projects, boards, sprints, filters, dashboards), administer Atlassian organizations (manage users, authentication), or automate Atlassian workflows from the terminal. Covers all acli commands including: jira workitem (create, edit, search, assign, transition, comment, clone, link, archive), jira project (create, list, update, archive), jira board/sprint, jira filter/dashboard, admin user management, and rovodev (Rovo Dev AI agent). Requires an authenticated acli binary already installed on the system."
-required_tools:
-  - acli
-env_vars:
-  - name: API_TOKEN
-    description: "Atlassian API token for non-interactive Jira authentication (optional — only needed for CI/automation, not for interactive OAuth login)"
-    required: false
-  - name: API_KEY
-    description: "Atlassian Admin API key for organization administration commands (optional — only needed for admin commands)"
-    required: false
+compatibility: "Requires the acli binary (https://developer.atlassian.com/cloud/acli/guides/install-acli/) installed and authenticated. Optional env vars: API_TOKEN (Jira API token for non-interactive auth), API_KEY (Admin API key for org-admin commands). Interactive OAuth via `acli jira auth login --web` is the default."
+metadata:
+  required_tools: "acli"
+  optional_env_vars: "API_TOKEN,API_KEY"
 ---
 
 # Atlassian CLI (acli) Reference
