@@ -7,11 +7,11 @@ Available on [ClawHub](https://clawhub.ai/peetzweg/atlassian-cli).
 ## What's Included
 
 ```
-skill/
 ├── SKILL.md                                # Core guide: auth, command structure, common patterns
-└── references/
-    ├── jira-workitem-commands.md            # 23 workitem commands (create, edit, search, transition, ...)
-    └── other-commands.md                    # Project, board, sprint, filter, dashboard, field, admin, rovodev
+├── references/
+│   ├── jira-workitem-commands.md            # 23 workitem commands (create, edit, search, transition, ...)
+│   └── other-commands.md                    # Project, board, sprint, filter, dashboard, field, admin, rovodev
+└── README.md
 ```
 
 Covers **58 commands** across all acli command groups with flags, descriptions, and usage examples.
@@ -30,6 +30,37 @@ This skill does **not** bundle the `acli` binary. You need to:
    echo "$API_TOKEN" | acli jira auth login --site "yoursite.atlassian.net" --email "you@example.com" --token
    ```
 3. **Verify** — `acli jira auth status`
+
+## Installation
+
+The repo is structured so that it can be cloned directly into a skills directory.
+This layout is compatible with [Claude Code](https://docs.anthropic.com/en/docs/claude-code/skills), [OpenCode](https://opencode.ai/docs/skills/), and [GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills).
+
+### Personal skill (all projects)
+
+Clone into any of the supported personal skill directories:
+
+```bash
+# Works with Claude Code, OpenCode, and GitHub Copilot
+git clone https://github.com/peetzweg/acli-skill.git ~/.claude/skills/acli
+
+# OpenCode-specific alternative
+git clone https://github.com/peetzweg/acli-skill.git ~/.config/opencode/skills/acli
+
+# Copilot-specific alternative
+git clone https://github.com/peetzweg/acli-skill.git ~/.copilot/skills/acli
+```
+
+To update: `git -C ~/.claude/skills/acli pull`
+
+### Project skill (single repository)
+
+Clone or symlink into your project's skills directory:
+
+```bash
+git clone https://github.com/peetzweg/acli-skill.git .claude/skills/acli
+# Add to .gitignore or commit as a subtree/submodule
+```
 
 ## Usage
 
