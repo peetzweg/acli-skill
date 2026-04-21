@@ -79,6 +79,14 @@ These commands are **impactful but reversible**:
 3. Prefer `--json` output to verify targets before applying destructive changes.
 4. Do not combine `--yes` with destructive bulk operations unless the user explicitly requests unattended execution.
 
+### Organization Admin Commands
+
+Commands under `acli admin` (including `admin user activate`, `deactivate`, `delete`, `cancel-delete`) affect the entire Atlassian organization — the blast radius is org-wide, not scoped to a single project or site. Treat them as a separate tier from other destructive operations:
+
+1. **Require fresh user confirmation in the current turn.** Prior approval from earlier in the session does not carry over to the next admin command. Always re-confirm, even if the user authorized a similar admin command moments ago.
+2. **Enumerate resolved targets before executing.** For any `admin user` command, first resolve `--email`, `--id`, or `--from-file` inputs to a concrete list (count plus each email/account ID) and show it to the user. This catches typos in comma-separated lists, stale entries in files, and ambiguous partial matches.
+3. **Never use `--ignore-errors` with `admin user delete` or `admin user deactivate`.** A partial failure in a bulk admin operation is a signal to stop and investigate, not to continue silently — half-applied deactivations are harder to audit than a clean halt.
+
 ## Command Structure
 
 ```
